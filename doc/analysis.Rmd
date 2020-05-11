@@ -1,0 +1,24 @@
+---
+title: "analysis"
+author: "Emil Hvitfeldt"
+date: "5/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r, echo=FALSE}
+drake::readd(islands_variability_chart)
+```
+
+```{r, echo=FALSE}
+drake::readd(genes_variability_chart)
+```
+
+```{r, echo=FALSE}
+drake::readd(promoters_variability_chart)
+```
