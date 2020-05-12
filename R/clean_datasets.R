@@ -9,8 +9,7 @@
 #' @export
 clean_datasets <- function(x) {
   x %>%
-    rename(region = 1) %>%
-    as_tibble() %>%
-    select(-acf, -n_obs)
+    dplyr::rename(region = 1) %>%
+    select(-n_obs)
 }
 

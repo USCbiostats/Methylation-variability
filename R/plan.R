@@ -1,6 +1,8 @@
 the_plan <-
   drake_plan(
 
+    min_obs = 10,
+    idat_folder = "~/Data/methylation/idat",
     data_directory = "~/Data/methylation/directory.csv",
 
     n_most = 500,
@@ -18,13 +20,13 @@ the_plan <-
       pull(basename),
 
     ## Load in datasets
-    bulk_tumor_islands =   read.csv(path(data_path, "bulk-tumor_islands.csv")),
-    bulk_tumor_genes =     read.csv(path(data_path, "bulk-tumor_genes.csv")),
-    bulk_tumor_promoters = read.csv(path(data_path, "bulk-tumor_promoters.csv")),
+    bulk_tumor_islands = get_metrics_islands(bulk_tumor_basenames, idat_folder, min_obs),
+    bulk_tumor_genes = get_metrics_genes(bulk_tumor_basenames, idat_folder, min_obs),
+    bulk_tumor_promoters = get_metrics_promoters(bulk_tumor_basenames, idat_folder, min_obs),
 
-    bulk_normal_islands =   read.csv(path(data_path, "bulk-normal_islands.csv")),
-    bulk_normal_genes =     read.csv(path(data_path, "bulk-normal_genes.csv")),
-    bulk_normal_promoters = read.csv(path(data_path, "bulk-normal_promoters.csv")),
+    bulk_normal_islands = get_metrics_islands(bulk_normal_basenames, idat_folder, min_obs),
+    bulk_normal_genes = get_metrics_genes(bulk_normal_basenames, idat_folder, min_obs),
+    bulk_normal_promoters = get_metrics_promoters(bulk_normal_basenames, idat_folder, min_obs),
 
     # Clean all datasets
     bulk_tumor_islands_region =   clean_datasets(bulk_tumor_islands),

@@ -1,4 +1,6 @@
 ## library() calls go here
+
+suppressMessages({
 library(conflicted)
 library(dotenv)
 library(drake)
@@ -9,3 +11,7 @@ library(ggplot2)
 library(glue)
 library(readr)
 library(stringr)
+library(minfi)
+library(tidyr)
+library(purrr)
+})

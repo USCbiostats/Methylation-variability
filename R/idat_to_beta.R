@@ -1,0 +1,36 @@
+#' Reads idat files and calculate beta values with Noob
+#'
+#' idat_to_beta_values_noob
+#'
+#' @param base String, base directory. Folder where idat files are stored.
+#' @param targets Data.frame with a column named 'Basename' in format
+#' 'sentrix_id'_'terminus', for example 200511490070_R01C01.
+#' @param force Should reading different size IDAT files be forced? Defaults to
+#' TRUE.
+#'
+#' @return matrix.
+#' @export
+read_idat <- function(base = NULL, targets = NULL, force = TRUE) {
+  targets <- as.data.frame(targets)
+  RGset <- read.metharray.exp(base = base, targets = targets, force = force)
+  RGset@annotation = c(array = "IlluminaHumanMethylationEPIC",
+                       annotation = "ilm10b4.hg19")
+
+  MSet.noob <- preprocessNoob(RGset, offset = 15, dyeCorr = TRUE,
+                              verbose = TRUE)
+
+  ratioSet.noob <- ratioConvert(MSet.noob, what =  "both", keepCN = TRUE)
+  beta.noob <- getBeta(ratioSet.noob)
+  beta.noob
+}
+
+#' Turns idat matrix to tibble
+#'
+#' @param x idat matrix.
+#'
+#' @return tibble.
+#' @export
+idat_to_tibble <- function(x) {
+  as.data.frame(x) %>%
+    tibble::rownames_to_column()
+}
