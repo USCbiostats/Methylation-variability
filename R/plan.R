@@ -1,8 +1,21 @@
 the_plan <-
   drake_plan(
 
+    data_directory = "~/Data/methylation/directory.csv",
+
     n_most = 500,
     data_path = "~/Documents/USC/P4/JohnHopkins/John-Hopkins/data/",
+
+    # extract basenames from data_directory
+    bulk_normal_basenames = read_csv(data_directory) %>%
+      dplyr::filter(jh_11_19) %>%
+      dplyr::filter(str_detect(sample_id, ".{1}N")) %>%
+      pull(basename),
+
+    bulk_tumor_basenames = read_csv(data_directory) %>%
+      dplyr::filter(jh_11_19) %>%
+      dplyr::filter(!str_detect(sample_id, ".{1}N")) %>%
+      pull(basename),
 
     ## Load in datasets
     bulk_tumor_islands =   read.csv(path(data_path, "bulk-tumor_islands.csv")),
