@@ -23,3 +23,11 @@ drake::readd(genes_variability_chart)
 drake::readd(promoters_variability_chart)
 ```
 
+```{r, echo=FALSE}
+drake::readd(list_a_variability_chart)
+```
+
+```{r, echo=FALSE}
+drake::readd(list_b_variability_chart)
+```
+
