@@ -2,7 +2,9 @@
 title: "analysis"
 author: "Emil Hvitfeldt"
 date: "5/11/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -21,6 +23,10 @@ drake::readd(genes_variability_chart)
 
 ```{r, echo=FALSE}
 drake::readd(promoters_variability_chart)
+```
+
+```{r, echo=FALSE}
+drake::readd(enhancers_variability_chart)
 ```
 
 ```{r, echo=FALSE}

@@ -25,3 +25,10 @@ get_gene_ref <- function() {
     tibble::rownames_to_column() %>%
     select(rowname, UCSC_RefGene_Name)
 }
+
+get_enhancer_ref <- function() {
+  IlluminaHumanMethylationEPICanno.ilm10b4.hg19::Other %>%
+    as.data.frame() %>%
+    tibble::rownames_to_column() %>%
+    select(rowname, Phantom4_Enhancers)
+}

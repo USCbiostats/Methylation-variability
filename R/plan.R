@@ -23,12 +23,14 @@ the_plan <-
     bulk_tumor_islands = get_metrics_islands(bulk_tumor_basenames, idat_folder, min_obs),
     bulk_tumor_genes = get_metrics_genes(bulk_tumor_basenames, idat_folder, min_obs),
     bulk_tumor_promoters = get_metrics_promoters(bulk_tumor_basenames, idat_folder, min_obs),
+    bulk_tumor_enhancers = get_metrics_enhancers(bulk_tumor_basenames, idat_folder, min_obs),
     tumor_list_a = get_metrics_cpgs(readr::read_rds("data/A.rds"), bulk_tumor_basenames, idat_folder, min_obs),
     tumor_list_b = get_metrics_cpgs(readr::read_rds("data/B.rds"), bulk_tumor_basenames, idat_folder, min_obs),
 
     bulk_normal_islands = get_metrics_islands(bulk_normal_basenames, idat_folder, min_obs),
     bulk_normal_genes = get_metrics_genes(bulk_normal_basenames, idat_folder, min_obs),
     bulk_normal_promoters = get_metrics_promoters(bulk_normal_basenames, idat_folder, min_obs),
+    bulk_normal_enhancers = get_metrics_enhancers(bulk_normal_basenames, idat_folder, min_obs),
     normal_list_a = get_metrics_cpgs(readr::read_rds("data/A.rds"), bulk_normal_basenames, idat_folder, min_obs),
     normal_list_b = get_metrics_cpgs(readr::read_rds("data/B.rds"), bulk_normal_basenames, idat_folder, min_obs),
 
@@ -36,12 +38,14 @@ the_plan <-
     bulk_tumor_islands_region =   clean_datasets(bulk_tumor_islands),
     bulk_tumor_genes_region =     clean_datasets(bulk_tumor_genes),
     bulk_tumor_promoters_region = clean_datasets(bulk_tumor_promoters),
+    bulk_tumor_enhancers_region = clean_datasets(bulk_tumor_enhancers),
     tumor_list_a_region =         clean_datasets(tumor_list_a),
     tumor_list_b_region =         clean_datasets(tumor_list_b),
 
     bulk_normal_islands_region =   clean_datasets(bulk_normal_islands),
     bulk_normal_genes_region =     clean_datasets(bulk_normal_genes),
     bulk_normal_promoters_region = clean_datasets(bulk_normal_promoters),
+    bulk_normal_enhancers_region = clean_datasets(bulk_normal_enhancers),
     normal_list_a_region =         clean_datasets(normal_list_a),
     normal_list_b_region =         clean_datasets(normal_list_b),
 
@@ -52,6 +56,8 @@ the_plan <-
                                       bulk_normal_genes_region),
     bulk_promoters = combine_datasets(bulk_tumor_promoters_region,
                                       bulk_normal_promoters_region),
+    bulk_enhancers = combine_datasets(bulk_tumor_enhancers_region,
+                                      bulk_normal_enhancers_region),
     list_a = combine_datasets(tumor_list_a_region, normal_list_a_region),
     list_b = combine_datasets(tumor_list_b_region, normal_list_b_region),
 
@@ -59,6 +65,7 @@ the_plan <-
     bulk_islands_variability =   calc_variability(bulk_islands),
     bulk_genes_variability =     calc_variability(bulk_genes),
     bulk_promoters_variability = calc_variability(bulk_promoters),
+    bulk_enhancers_variability = calc_variability(bulk_enhancers),
     list_a_variability = calc_variability(list_a),
     list_b_variability = calc_variability(list_b),
 
@@ -66,14 +73,16 @@ the_plan <-
     islands_variability_chart =   variability_chart(bulk_islands_variability,   "islands"),
     genes_variability_chart =     variability_chart(bulk_genes_variability,     "genes"),
     promoters_variability_chart = variability_chart(bulk_promoters_variability, "promoters"),
+    enhancers_variability_chart = variability_chart(bulk_enhancers_variability, "enhancers"),
     list_a_variability_chart = variability_chart(list_a_variability, "List A"),
     list_b_variability_chart = variability_chart(list_b_variability, "List B"),
 
     # Generate report with charts
     report = target(
       command = {
-        rmarkdown::render(knitr_in("doc/analysis.Rmd"))
+        rmarkdown::render(knitr_in("doc/analysis.Rmd"), output_format = "all")
         file_out("doc/analysis.html")
+        file_out("doc/analysis.pdf")
       }
     ),
 
