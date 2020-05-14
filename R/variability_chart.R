@@ -12,9 +12,5 @@ variability_chart <- function(data, type) {
     labs(title = glue("Variability for {type}"),
          x = "tumor variability",
          y = "normal variability") +
-    guides(color = "none") +
-    annotate("segment", x = 0.5, xend = 1.5, y = -0.1, yend = -0.1, arrow = arrow()) +
-    annotate("text", x = 1, y = -0.05, label = "Most variable") +
-    annotate("segment", y = 0.5, yend = 1.5, x = -0.1, xend = -0.1, arrow = arrow()) +
-    annotate("text", y = 1, x = -0.05, label = "Most variable", angle = 90)
+    guides(color = "none")
 }
