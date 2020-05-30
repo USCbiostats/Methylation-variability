@@ -9,7 +9,6 @@
 #' @export
 clean_datasets <- function(x) {
   x %>%
-    dplyr::rename(region = 1) %>%
-    select(-n_obs)
+    dplyr::rename(region = 1)
 }
 

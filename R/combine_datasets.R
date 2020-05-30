@@ -7,7 +7,7 @@
 #' @export
 combine_datasets <- function(tumor, normal) {
   left_join(
-    by = c("region"),
+    by = c("region", "n_obs"),
     suffix = c("_tumor", "_normal"),
     tumor,
     normal
