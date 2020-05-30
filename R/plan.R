@@ -64,12 +64,12 @@ the_plan <-
     # Normalize all variables to common scale
     scaler_recipe = scaler(bulk_islands),
 
-    normalized_islands =   bake(scaler_recipe, bulk_islands),
-    normalized_genes =     bake(scaler_recipe, bulk_genes),
-    normalized_promoters = bake(scaler_recipe, bulk_promoters),
-    normalized_enhancers = bake(scaler_recipe, bulk_enhancers),
-    normalized_list_a =    bake(scaler_recipe, list_a),
-    normalized_list_b =    bake(scaler_recipe, list_b),
+    normalized_islands =   apply_scaler(scaler_recipe, bulk_islands),
+    normalized_genes =     apply_scaler(scaler_recipe, bulk_genes),
+    normalized_promoters = apply_scaler(scaler_recipe, bulk_promoters),
+    normalized_enhancers = apply_scaler(scaler_recipe, bulk_enhancers),
+    normalized_list_a =    apply_scaler(scaler_recipe, list_a),
+    normalized_list_b =    apply_scaler(scaler_recipe, list_b),
 
     # Calculate variability
     bulk_islands_variability =   calc_variability(normalized_islands),
