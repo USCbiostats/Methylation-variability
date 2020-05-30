@@ -19,7 +19,7 @@ get_metrics_genes <- function(basename, idat_folder, min_obs) {
     select(-chr, -pos) %>%
     inner_join(gene_ref, by = "rowname") %>%
     dplyr::filter(UCSC_RefGene_Name != "") %>%
-    separate_rows(UCSC_RefGene_Name) %>%
+    separate_rows(UCSC_RefGene_Name, sep = ";") %>%
     select(rowname, UCSC_RefGene_Name, everything()) %>%
     select(-c(rowname)) %>%
     nest(data = -c(UCSC_RefGene_Name))
