@@ -61,13 +61,23 @@ the_plan <-
     list_a = combine_datasets(tumor_list_a_region, normal_list_a_region),
     list_b = combine_datasets(tumor_list_b_region, normal_list_b_region),
 
+    # Normalize all variables to common scale
+    scaler_recipe = scaler(bulk_islands),
+
+    normalized_islands =   bake(scaler_recipe, bulk_islands),
+    normalized_genes =     bake(scaler_recipe, bulk_genes),
+    normalized_promoters = bake(scaler_recipe, bulk_promoters),
+    normalized_enhancers = bake(scaler_recipe, bulk_enhancers),
+    normalized_list_a =    bake(scaler_recipe, list_a),
+    normalized_list_b =    bake(scaler_recipe, list_b),
+
     # Calculate variability
-    bulk_islands_variability =   calc_variability(bulk_islands),
-    bulk_genes_variability =     calc_variability(bulk_genes),
-    bulk_promoters_variability = calc_variability(bulk_promoters),
-    bulk_enhancers_variability = calc_variability(bulk_enhancers),
-    list_a_variability = calc_variability(list_a),
-    list_b_variability = calc_variability(list_b),
+    bulk_islands_variability =   calc_variability(normalized_islands),
+    bulk_genes_variability =     calc_variability(normalized_genes),
+    bulk_promoters_variability = calc_variability(normalized_promoters),
+    bulk_enhancers_variability = calc_variability(normalized_enhancers),
+    list_a_variability = calc_variability(normalized_list_a),
+    list_b_variability = calc_variability(normalized_list_b),
 
     # Variability charts
     islands_variability_chart =   variability_chart(bulk_islands_variability,   "islands"),

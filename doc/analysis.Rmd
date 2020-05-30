@@ -37,3 +37,17 @@ drake::readd(list_a_variability_chart)
 drake::readd(list_b_variability_chart)
 ```
 
+## Normalizing information
+
+The data have been normalized according to values found in island regions.
+Sufficient statistics for normalization is found in this table
+
+```{r, echo=FALSE}
+scaler_recipe <- drake::readd(scaler_recipe)
+
+tidy(scaler_recipe$steps[[1]]) %>%
+  select(-id) %>%
+  mutate(value = round(value, 4)) %>%
+  pivot_wider(names_from = statistic, values_from = value) %>%
+  kable()
+```

@@ -42,6 +42,15 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -89,5 +98,27 @@
 \end{verbatim}
 
 \includegraphics{analysis_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{normalizing-information}{%
+\subsection{Normalizing information}\label{normalizing-information}}
+
+The data have been normalized according to values found in island
+regions. Sufficient statistics for normalization is found in this table
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule
+terms & mean & sd\tabularnewline
+\midrule
+\endhead
+mhic\_tumor & 0.1234 & 0.1815\tabularnewline
+pwd\_tumor & 0.0819 & 0.0894\tabularnewline
+var\_sample\_tumor & 0.0157 & 0.0273\tabularnewline
+var\_cpg\_tumor & 0.0140 & 0.0245\tabularnewline
+mhic\_normal & 0.0854 & 0.1675\tabularnewline
+pwd\_normal & 0.0623 & 0.0763\tabularnewline
+var\_sample\_normal & 0.0100 & 0.0241\tabularnewline
+var\_cpg\_normal & 0.0030 & 0.0093\tabularnewline
+\bottomrule
+\end{longtable}
 
 \end{document}
