@@ -115,4 +115,6 @@ the_plan <-
 
     tumor_island150 = get_island150_data(bulk_tumor_basenames, idat_folder),
 
+    tumor_island150_mhic = calc_mhic_island150(tumor_island150),
+
 )
