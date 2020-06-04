@@ -119,4 +119,6 @@ the_plan <-
 
     tumor_island150_pwd = calc_pwd_island150(tumor_island150),
 
+    tumor_island150_var_sample = calc_var_sample_island150(tumor_island150),
+
 )
