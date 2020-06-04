@@ -110,4 +110,9 @@ the_plan <-
       file_out("doc/most_variable_promoters.csv")
     ),
 
+    # --------------------------------------------------------------------------
+    # Islands 150bp ranges
+
+    tumor_island150 = get_island150_data(bulk_tumor_basenames, idat_folder),
+
 )
