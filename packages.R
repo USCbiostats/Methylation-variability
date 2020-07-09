@@ -20,4 +20,5 @@ library(slider)
 library(bedslider)
 
 library(minfi)
+library(IlluminaHumanMethylationEPICmanifest)
 })
