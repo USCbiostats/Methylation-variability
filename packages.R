@@ -21,4 +21,5 @@ library(bedslider)
 
 library(minfi)
 library(IlluminaHumanMethylationEPICmanifest)
+library(IlluminaHumanMethylationEPICanno.ilm10b4.hg19)
 })
