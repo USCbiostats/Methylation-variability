@@ -287,6 +287,13 @@
       "Repository": "CRAN",
       "Hash": "d86b5081d7db4c8ed343cdd35a7dbc43"
     },
+    "base64enc": {
+      "Package": "base64enc",
+      "Version": "0.1-3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "543776ae6848fde2f48ff3816d0628bc"
+    },
     "base64url": {
       "Package": "base64url",
       "Version": "1.4",
@@ -310,8 +317,8 @@
       "RemoteRepo": "bedslider",
       "RemoteUsername": "emilhvitfeldt",
       "RemoteRef": "master",
-      "RemoteSha": "5ca57d06d94a546a4b71b18f677ab8b809158b63",
-      "Hash": "508aefe1f0163be06200888208ba5324"
+      "RemoteSha": "3b2c603988e9ea8706ae75c295a542321266d04d",
+      "Hash": "9915515b9e91901aa68a306e2f114f55"
     },
     "biomaRt": {
       "Package": "biomaRt",
@@ -596,6 +603,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "726671f634529d470545f9fd1a9d1869"
+    },
+    "htmltools": {
+      "Package": "htmltools",
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7d651b7131794fe007b1ad6f21aaa401"
     },
     "httr": {
       "Package": "httr",
@@ -1104,6 +1118,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "fde4fc571f5f61978652c229d4713845"
+    },
+    "tinytex": {
+      "Package": "tinytex",
+      "Version": "0.24",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8f24b65b86f4d6d7b1e2d8a4ce2c02fb"
     },
     "txtq": {
       "Package": "txtq",
