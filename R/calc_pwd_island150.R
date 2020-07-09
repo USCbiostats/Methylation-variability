@@ -14,10 +14,9 @@ calc_pwd_island150 <- function(data) {
     group_by(chr)
 
   pwds <- ref %>%
-    mutate(groups = slide_index_chr(row_number, .i = pos, ~paste(.x, sep = "-", collapse = "-"),
+    mutate(groups = slide_index_chr(row_number, .i = pos, ~glue_collapse(.x, sep = " "),
                                     .before = 75, .after = 75)) %>%
-    ungroup() %>%
-    separate_rows(groups, sep = "-", convert = TRUE) %>%
+    separate_rows(groups, sep = " ", convert = TRUE) %>%
     select(-n_obs, -Relation_to_Island, -n_obs_in_island, -rowname, -row_number, -Islands_Name, -pos) %>%
     nest(matches("[0-9]{12}")) %>%
     mutate(pwd = map_dbl(data, pwd_df)) %>%

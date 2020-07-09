@@ -25,5 +25,6 @@ get_island150_data <- function(basename, idat_folder) {
                                              ~ sum(.x == "Island", na.rm = TRUE),
                                              .before = 75, .after = 75)) %>%
     dplyr::filter(n_obs_in_island > 0) %>%
-    select(chr, pos, Relation_to_Island, n_obs, n_obs_in_island, everything())
+    select(chr, pos, Relation_to_Island, n_obs, n_obs_in_island, everything()) %>%
+    ungroup()
 }

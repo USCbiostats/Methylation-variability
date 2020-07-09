@@ -8,6 +8,7 @@ calc_mhic_island150 <- function(data) {
   }
 
   data %>%
+    group_by(chr) %>%
     mutate_at(vars(matches("[0-9]{12}")), ~mhic_slide(.x, pos)) %>%
     ungroup() %>%
     mutate(mhic_combined = select(., matches("[0-9]{12}")) %>% rowMeans(na.rm = TRUE))
