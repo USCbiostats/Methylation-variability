@@ -4,8 +4,7 @@ get_island150_data <- function(basename, idat_folder) {
 
   betas <- read_idat(base = idat_folder,
                      targets = target_df,
-                     force = TRUE) %>%
-    idat_to_tibble()
+                     force = TRUE)
 
   ## Preproccess
 

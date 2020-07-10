@@ -3,5 +3,5 @@ extract_most_variable <- function(data, n_most) {
     mutate(variability = tumor_variability * normal_variability) %>%
     arrange(dplyr::desc(variability)) %>%
     dplyr::slice(seq_len(n_most)) %>%
-    select(region, ends_with("variability"))
+    select(group, ends_with("variability"))
 }

@@ -19,7 +19,10 @@ library(slider)
 
 library(bedslider)
 
+library(annotatr)
 library(minfi)
 library(IlluminaHumanMethylationEPICmanifest)
 library(IlluminaHumanMethylationEPICanno.ilm10b4.hg19)
 })
+
+conflict_prefer("select", "dplyr")

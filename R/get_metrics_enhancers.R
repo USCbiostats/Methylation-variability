@@ -5,8 +5,7 @@ get_metrics_enhancers <- function(basename, idat_folder, min_obs) {
 
   betas <- read_idat(base = idat_folder,
                      targets = target_df,
-                     force = TRUE) %>%
-    idat_to_tibble()
+                     force = TRUE)
 
   ## Preproccess
 
