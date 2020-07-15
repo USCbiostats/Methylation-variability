@@ -121,43 +121,145 @@ the_plan <-
 
     ## Extract data resuls
     most_variable_islands = write_csv(
-      extract_most_variable(bulk_islands_variability, n_most),
+      extract_most_variable(bulk_islands_variability, n_most, min_obs),
       file_out("doc/most_variable_islands.csv")
     ),
     most_variable_genes = write_csv(
-      extract_most_variable(bulk_genes_variability, n_most),
+      extract_most_variable(bulk_genes_variability, n_most, min_obs),
       file_out("doc/most_variable_genes.csv")
     ),
     most_variable_promoters = write_csv(
-      extract_most_variable(bulk_promoters_variability, n_most),
+      extract_most_variable(bulk_promoters_variability, n_most, min_obs),
       file_out("doc/most_variable_promoters.csv")
     ),
 
     # --------------------------------------------------------------------------
     # Islands 150bp ranges
 
-    tumor_island150 = bulk_tumor_idat %>%
-      group_by(chr) %>%
-      bed_slide(vars = list(`200511490070_R02C01`, `200511490070_R03C01`,
-                            `200511490070_R05C01`, `200511490070_R06C01`,
-                            `200511490070_R07C01`, `200511490070_R08C01`,
-                            `200511490073_R02C01`, `200511490073_R03C01`,
-                            `200511490073_R04C01`, `200511490073_R05C01`,
-                            `200511490073_R06C01`, `200511490073_R07C01`,
-                            `200511490073_R08C01`, `200360140022_R01C01`,
-                            `200360140022_R02C01`, `200360140022_R03C01`,
-                            `200360140022_R04C01`, `200514040139_R01C01`,
-                            `200514040139_R02C01`, `200514040139_R03C01`,
-                            `200514040139_R04C01`, `200514030126_R02C01`,
-                            `200514030126_R03C01`, `200705860031_R02C01`,
-                            `200705860031_R03C01`, `200705860031_R04C01`,
-                            `200705860031_R05C01`, `200705860031_R06C01`,
-                            `200705860031_R07C01`, `200705860031_R08C01`,
-                            `200357150201_R07C01`, `200357150201_R08C01`),
+    tumor_island150 = bulk_tumor_islands %>%
+      group_by(seqnames) %>%
+      bed_slide(vars = list(`X200511490070_R02C01`, `X200511490070_R03C01`,
+                            `X200511490070_R05C01`, `X200511490070_R06C01`,
+                            `X200511490070_R07C01`, `X200511490070_R08C01`,
+                            `X200511490073_R02C01`, `X200511490073_R03C01`,
+                            `X200511490073_R04C01`, `X200511490073_R05C01`,
+                            `X200511490073_R06C01`, `X200511490073_R07C01`,
+                            `X200511490073_R08C01`, `X200360140022_R01C01`,
+                            `X200360140022_R02C01`, `X200360140022_R03C01`,
+                            `X200360140022_R04C01`, `X200514040139_R01C01`,
+                            `X200514040139_R02C01`, `X200514040139_R03C01`,
+                            `X200514040139_R04C01`, `X200514030126_R02C01`,
+                            `X200514030126_R03C01`, `X200705860031_R02C01`,
+                            `X200705860031_R03C01`, `X200705860031_R04C01`,
+                            `X200705860031_R05C01`, `X200705860031_R06C01`,
+                            `X200705860031_R07C01`, `X200705860031_R08C01`,
+                            `X200357150201_R07C01`, `X200357150201_R08C01`),
                 funs = list(mhic = metric_mhic,
                             pwd = metric_pwd,
                             sample_var = metric_sample_var,
                             n_obs = nrow),
-                .i = pos,
+                .i = start,
                 size = 150),
+
+    normal_island150 = bulk_normal_islands %>%
+      group_by(seqnames) %>%
+      bed_slide(vars = list(`X200511490070_R01C01`, `X200511490070_R04C01`,
+                            `X200511490073_R01C01`, `X200360140022_R05C01`,
+                            `X200360140022_R08C01`, `X200705860031_R01C01`,
+                            `X202229250091_R08C01`),
+                funs = list(mhic = metric_mhic,
+                            pwd = metric_pwd,
+                            sample_var = metric_sample_var,
+                            n_obs = nrow),
+                .i = start,
+                size = 150),
+
+    combined_island150 = combine_datasets(
+      tumor_island150 %>% mutate(group = base::paste(seqnames...1, start)) %>%
+        select(group, mhic, pwd, sample_var, n_obs),
+      normal_island150 %>% mutate(group = base::paste(seqnames...1, start)) %>%
+        select(group, mhic, pwd, sample_var, n_obs)
+      ) %>%
+      separate(group, c("chr", "pos")) %>%
+      annotate_dataset(island_annotations) %>%
+      calc_variability(),
+
+    island150_min_obs = 4,
+    island150_n_genes = 1000,
+
+    island150_gsea_upper_right = calc_island150_gsea(combined_island150,
+                                                     desc(tumor_variability * normal_variability),
+                                                     island150_min_obs,
+                                                     island150_n_genes,
+                                                     genes_annotations,
+                                                     island_annotations),
+
+    island150_gsea_upper_left = calc_island150_gsea(combined_island150,
+                                                    desc(normal_variability - tumor_variability),
+                                                    island150_min_obs,
+                                                    island150_n_genes,
+                                                    genes_annotations,
+                                                    island_annotations),
+
+    island150_gsea_lower_right = calc_island150_gsea(combined_island150,
+                                                     desc(tumor_variability - normal_variability),
+                                                     island150_min_obs,
+                                                     island150_n_genes,
+                                                     genes_annotations,
+                                                     island_annotations),
+
+
+    island150_gsea_lower_left = calc_island150_gsea(combined_island150,
+                                                    tumor_variability * normal_variability,
+                                                    island150_min_obs,
+                                                    island150_n_genes,
+                                                    genes_annotations,
+                                                    island_annotations),
+
+    island150_gsea_report = target(
+      command = {
+        rmarkdown::render(knitr_in("doc/island150_gsea_analysis.Rmd"), output_format = "all")
+        file_out("doc/island150_gsea_analysis.html")
+        file_out("doc/island150_gsea_analysis.pdf")
+      }
+    ),
+
+    ## Rolling distance
+
+    tumor_roll_1000 = roll_distance(bulk_tumor_idat, bulk_tumor_basenames, 10000),
+
+    ## Gene Set Enrichment Analysis
+    n_genes = 1000,
+
+    gene_gsea_upper_right = calc_gsea(bulk_genes_variability,
+                                      desc(tumor_variability * normal_variability),
+                                      n_genes = n_genes,
+                                      min_obs,
+                                      genes_annotations),
+
+    gene_gsea_upper_left = calc_gsea(bulk_genes_variability,
+                                     desc(normal_variability - tumor_variability),
+                                     n_genes = n_genes,
+                                     min_obs,
+                                     genes_annotations),
+
+    gene_gsea_lower_right = calc_gsea(bulk_genes_variability,
+                                      desc(tumor_variability - normal_variability),
+                                      n_genes = n_genes,
+                                      min_obs,
+                                      genes_annotations),
+
+    gene_gsea_lower_left = calc_gsea(bulk_genes_variability,
+                                     (tumor_variability * normal_variability),
+                                     n_genes = n_genes,
+                                     min_obs,
+                                     genes_annotations),
+
+    gsea_report = target(
+      command = {
+        rmarkdown::render(knitr_in("doc/gsea_analysis.Rmd"), output_format = "all")
+        file_out("doc/gsea_analysis.html")
+        file_out("doc/gsea_analysis.pdf")
+      }
+    ),
 )

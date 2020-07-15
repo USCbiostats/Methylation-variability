@@ -1,0 +1,81 @@
+---
+title: "Island 150 gsea analysis"
+author: "Emil Hvitfeldt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, out.width = "100%", fig.width = 10)
+```
+
+```{r, echo=FALSE}
+n_genes <- drake::readd(n_genes)
+island150_gsea_upper_right <- drake::readd(island150_gsea_upper_right)
+island150_gsea_upper_left  <- drake::readd(island150_gsea_upper_left)
+island150_gsea_lower_right <- drake::readd(island150_gsea_lower_right)
+island150_gsea_lower_left  <- drake::readd(island150_gsea_lower_left)
+```
+
+# `r n_genes` genes that have high variability in tumor and normal
+
+```{r}
+as.data.frame(island150_gsea_upper_right) %>%
+  select(ID, Description) %>%
+  as_tibble()
+```
+
+```{r}
+barplot(island150_gsea_upper_right)
+```
+```{r}
+emapplot(island150_gsea_upper_right)
+```
+
+# `r n_genes` genes that have low variability in tumor and normal
+
+```{r}
+as.data.frame(island150_gsea_upper_left) %>%
+  select(ID, Description) %>%
+  as_tibble()
+```
+
+```{r}
+barplot(island150_gsea_upper_left)
+```
+```{r}
+emapplot(island150_gsea_upper_left)
+```
+
+# `r n_genes` where variability is higher for tumor than in normal
+
+```{r}
+as.data.frame(island150_gsea_lower_right) %>%
+  select(ID, Description) %>%
+  as_tibble()
+```
+
+```{r}
+barplot(island150_gsea_lower_right)
+```
+```{r}
+emapplot(island150_gsea_lower_right)
+```
+
+# `r n_genes` where variability is higher for normal than in tumor
+
+```{r}
+as.data.frame(island150_gsea_lower_left) %>%
+  select(ID, Description) %>%
+  as_tibble()
+```
+
+```{r}
+barplot(island150_gsea_lower_left)
+```
+```{r}
+emapplot(island150_gsea_lower_left)
+```
+
