@@ -3,10 +3,9 @@ the_plan <-
 
     min_obs = 10,
     idat_folder = "~/Data/methylation/idat",
-    data_directory = "~/Data/methylation/directory.csv",
+    data_directory = "data/directory.csv",
 
     n_most = 500,
-    data_path = "~/Documents/USC/P4/JohnHopkins/John-Hopkins/data/",
 
     # extract basenames from data_directory
     bulk_normal_basenames = read_csv(data_directory) %>%
